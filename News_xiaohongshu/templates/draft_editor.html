@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ app_name }} Draft Editor</title>
+  <link rel="stylesheet" href="/static/admin.css" />
+  <link rel="stylesheet" href="/static/draft_editor.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <h1>Draft Editor #{{ draft_id }}</h1>
+      <p>Save updates before approval/publish. Preview is local and does not auto-publish.</p>
+    </header>
+
+    <section class="panel">
+      <div class="actions">
+        <a class="link-btn" href="/admin">Back to Admin</a>
+        <button id="btn-reload">Reload</button>
+      </div>
+      <div id="draft-meta" class="status-line">Loading draft...</div>
+      <div id="action-status" class="status-line">Ready.</div>
+      <div class="form-grid">
+        <label>
+          Publish Token (optional)
+          <input
+            id="publish-token"
+            type="password"
+            autocomplete="off"
+            placeholder="Required only when backend publish guard is enabled"
+          />
+        </label>
+      </div>
+    </section>
+
+    <section class="panel editor-grid">
+      <div class="editor-left">
+        <label>Topic <input id="draft-topic" disabled /></label>
+        <label>
+          Title
+          <input id="draft-title" maxlength="20" />
+          <small id="title-limit-hint">0/20</small>
+        </label>
+        <label>Tags (comma separated) <input id="draft-tags" /></label>
+        <label>
+          Cover Image URL / Local Path
+          <input id="draft-cover" placeholder="https://xx.com/a.jpg or D:\\images\\a.jpg" />
+        </label>
+        <div class="cover-upload-row">
+          <input id="cover-file" type="file" accept="image/*" />
+          <button id="btn-upload-cover" type="button">Upload Local Cover</button>
+        </div>
+        <small id="cover-upload-hint">支持本地图片上传后自动填充封面路径</small>
+        <label>Editor Notes <textarea id="draft-notes" rows="3"></textarea></label>
+        <label>Content <textarea id="draft-content" rows="18"></textarea></label>
+
+        <div class="actions">
+          <button id="btn-save">Save Draft</button>
+          <button id="btn-approve">Approve</button>
+          <button id="btn-reject">Reject</button>
+          <button id="btn-publish">Publish</button>
+          <button id="btn-status">Publish Status</button>
+        </div>
+      </div>
+
+      <div class="editor-right">
+        <h3>Preview</h3>
+        <article id="preview-box" class="preview-box">No preview yet.</article>
+      </div>
+    </section>
+  </main>
+  <div id="toast-container" class="toast-container"></div>
+
+  <script>
+    window.DRAFT_ID = {{ draft_id }};
+  </script>
+  <script src="/static/draft_editor.js"></script>
+</body>
+</html>

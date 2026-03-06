@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ app_name }} Admin</title>
+  <link rel="stylesheet" href="/static/admin.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <h1>{{ app_name }} 半自动发布台</h1>
+      <p>热点抓取 -> 草稿生成 -> 编辑预览 -> 人工审核 -> 手动发布</p>
+    </header>
+
+    <section class="status-cards">
+      <article class="status-card">
+        <div class="status-label">服务</div>
+        <div id="metric-service" class="status-value">-</div>
+      </article>
+      <article class="status-card">
+        <div class="status-label">搜索供应商</div>
+        <div id="metric-provider" class="status-value">-</div>
+      </article>
+      <article class="status-card">
+        <div class="status-label">小红书登录</div>
+        <div id="metric-xhs" class="status-value">-</div>
+      </article>
+      <article class="status-card">
+        <div class="status-label">调度状态</div>
+        <div id="metric-scheduler" class="status-value">-</div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>系统状态</h2>
+      <div id="system-status" class="status-line">加载中...</div>
+      <div id="xhs-login-status" class="status-line">加载中...</div>
+      <div class="form-grid">
+        <label>
+          Publish Token (optional)
+          <input
+            id="publish-token"
+            type="password"
+            autocomplete="off"
+            placeholder="Required only when backend publish guard is enabled"
+          />
+        </label>
+      </div>
+      <div class="actions">
+        <button id="btn-refresh-status">刷新状态</button>
+        <button id="btn-xhs-login-qrcode">获取小红书登录二维码</button>
+        <button id="btn-xhs-reset-login">重置登录(Cookies)</button>
+      </div>
+      <div id="xhs-qrcode-panel" class="qrcode-panel">
+        <div id="xhs-qrcode-tip" class="status-line">未获取二维码</div>
+        <img id="xhs-qrcode-image" alt="小红书登录二维码" />
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>抓取热点新闻</h2>
+      <div class="form-grid">
+        <label>查询词 <input id="hot-query" value="热点新闻" /></label>
+        <label>数量 <input id="hot-limit" type="number" min="1" max="100" value="20" /></label>
+        <label>时间范围
+          <select id="hot-period">
+            <option value="24h">24h</option>
+            <option value="week">week</option>
+          </select>
+        </label>
+      </div>
+      <div class="actions">
+        <button id="btn-fetch-hot">抓取热点</button>
+      </div>
+      <div id="hot-result-summary" class="status-line">暂无结果</div>
+      <div id="hot-items" class="news-list"></div>
+      <details class="json-details">
+        <summary>查看原始 JSON</summary>
+        <pre id="hot-result" class="result-box">暂无结果</pre>
+      </details>
+    </section>
+
+    <section class="panel">
+      <h2>生成草稿</h2>
+      <div class="form-grid">
+        <label>主题 <input id="draft-topic" value="热点新闻" /></label>
+        <label>引用新闻条数 <input id="draft-max-items" type="number" min="1" max="20" value="5" /></label>
+      </div>
+      <div class="actions">
+        <button id="btn-generate-draft">生成草稿</button>
+        <button id="btn-refresh-drafts">刷新草稿列表</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>草稿列表</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>状态</th>
+              <th>主题</th>
+              <th>标题</th>
+              <th>更新时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="drafts-body">
+            <tr><td colspan="6">加载中...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>任务历史</h2>
+      <div class="actions">
+        <button id="btn-refresh-jobs">刷新任务</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>任务</th>
+              <th>状态</th>
+              <th>消息</th>
+              <th>时间</th>
+            </tr>
+          </thead>
+          <tbody id="jobs-body">
+            <tr><td colspan="5">加载中...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="/static/admin.js"></script>
+</body>
+</html>
+

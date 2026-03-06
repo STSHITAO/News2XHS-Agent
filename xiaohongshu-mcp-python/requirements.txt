@@ -1,0 +1,6 @@
+fastapi==0.115.8
+uvicorn==0.34.0
+pydantic==2.10.6
+pydantic-settings==2.7.1
+playwright==1.51.0
+httpx==0.28.1
