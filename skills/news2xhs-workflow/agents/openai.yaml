@@ -1,0 +1,4 @@
+interface:
+  display_name: "News2XHS Workflow"
+  short_description: "Guide News2XHS drafting and publishing with MCP tools."
+  default_prompt: "Use $news2xhs-workflow to run the News2XHS drafting, review, and publish SOP for a topic."
